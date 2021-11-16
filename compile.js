@@ -7,5 +7,25 @@ const inboxPath = path.resolve(__dirname, "contracts", "Inbox.sol"); //reach the
 const source = fs.readFileSync(inboxPath,'utf8'); //read the content
 
 
-//exporting methods inside of the inbox 
-module.exports = solc.compile(source, 1).contracts[":Inbox"];
+const input = {
+    language: 'Solidity',
+    sources: {
+      'Inbox.sol': {
+        content: source,
+      },
+    },
+    settings: {
+      outputSelection: {
+        '*': {
+          '*': ['*'],
+        },
+      },
+    },
+  };
+
+  
+  //exporting methods inside of the inbox 
+  module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
+    'Inbox.sol'
+  ].Inbox;
+  
